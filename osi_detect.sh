@@ -35,6 +35,11 @@ else
             DIST=`cat /etc/redhat-release |sed s/\ release.*//`
             PSUEDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
             REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
+        elif [ -f /etc/slackware-version ]; then
+	          read -r DIST < /etc/slackware-version
+            DistroBasedOn='Slackware'
+	          PSUEDONAME=$(cat /etc/os-release | sed -n /PRETTY_NAME=/p | sed s/PRETTY_NAME=// | tr -d '"')
+	          REV=$(cat /etc/os-release | sed -n /VERSION=/p | sed s/[^0-9.]//g)  
         elif [ -f /etc/SuSE-release ] ; then
             DistroBasedOn='SuSe'
             PSUEDONAME=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
